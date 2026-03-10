@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.static(__dirname));
 // Cấu hình kết nối (Sửa lại đúng tên DB và mật khẩu của bạn)
 const config = {
+    
     user: 'adminvuvu',
     password: '@Tranvanvu3108', // Thầy điền mật khẩu Azure vào đây nhé
     server: 'vuvu-sql-server.database.windows.net', 
