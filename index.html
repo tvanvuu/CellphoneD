@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/f4b753e8bf.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>CellphoneD</title>
+</head>
+
+<body>
+    <header>
+        <img src="image/head.jpg" alt="Header Banner" style="width: 100%; height: auto;">
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href=""><img style="width: 150px;" src="image/logo.jpg" alt=""></a></li>
+                <li><i class="fa-solid fa-magnifying-glass"></i><input type="text" placeholder="Bạn muốn tìm gì..."></li>
+                <li>
+                    <a href="#" id="login-btn">
+                        <i class="fa-solid fa-user"></i> Đăng nhập
+                    </a>
+                </li>
+                <div class="login-form" id="login-form-overlay">
+                    <div class="login-form-content">
+                        <span class="close-btn" id="login-close">&times;</span>
+                    
+                        <div id="login-step-1">
+                            <h2>Tra cứu thông tin đơn hàng</h2>
+                            <form id="form-step-1">
+                                <div class="input-group">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                    <input type="text" id="phone-input" placeholder="Nhập số điện thoại mua hàng" required>
+                                </div>
+                                <button type="submit">Tiếp Tục</button>
+                            </form>
+                        </div>
+                    
+                        <div id="login-step-2" style="display: none;">
+                            <h2>Nhập mã xác nhận</h2>
+                            <p style="margin-bottom: 20px;">Mã xác thực được gửi đến: <b id="display-phone">...</b></p>
+                            
+                            <form onsubmit="return false;"> 
+                                <div class="input-group">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <input type="text" placeholder="Nhập mã OTP (4 số)" maxlength="4" style="text-align: left; font-weight: bold; font-size: 20px;">
+                                </div>
+                                <button type="button">XÁC NHẬN</button>
+                            </form>
+                    
+                            <div class="otp-links" style="margin-top: 15px; font-size: 14px;">
+                                <a href="#" style="color: #007bff; text-decoration: none;">Gửi lại mã</a>
+                                <span style="color: #ccc; margin: 0 5px;">|</span>
+                                <a href="#" id="change-phone-btn" style="color: #b40001; text-decoration: none;">Đổi số điện thoại</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <li style="position: relative; margin-right: 15px;" id="notification-bell">
+                    <button style="background: transparent; border: none; font-size: 22px; color: white; cursor: pointer; position: relative; padding: 5px; outline: none;">
+                        <i class="fa-regular fa-bell"></i>
+                        <span id="notif-badge" style="display: none; position: absolute; top: -2px; right: -5px; background: #FFF200; color: #d70018; font-size: 11px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; text-align: center; line-height: 18px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">0</span>
+                    </button>
+                    <div id="notif-dropdown" style="display: none; position: absolute; top: 110%; right: -80px; width: 340px; background: white; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); z-index: 1000; overflow: hidden; color: #333; border: 1px solid #eee;">
+                        <h4 style="padding: 12px 15px; border-bottom: 1px solid #eee; margin: 0; background: #fdfdfd; color: #d70018;"><i class="fa-solid fa-bell"></i> Thông báo mới</h4>
+                        <div id="notif-list" style="max-height: 350px; overflow-y: auto;">
+                            <p style="padding: 20px; text-align: center; color: #777; margin: 0;">Chưa có thông báo nào.</p>
+                        </div>
+                    </div>
+                </li>
+                <li><a href=""></a><button><i class="fa-solid fa-cart-shopping"></i>Giỏ hàng</button></li>
+                <li id="adress-form"><a href="#"><i class="fa-solid fa-location-crosshairs"></i>Đà Nẵng<i class="fa-solid fa-caret-down"></i></a></li>
+                <div class="adress-form">
+                    <div class="adress-form-content">
+                        <h2>Chọn địa chỉ nhận hàng<span id="adress-close" style="cursor: pointer;">X Đóng</span></h2>
+                        <form id="form-address" onsubmit="return false;">
+                            <p>Chọn địa điểm nhận hàng để biết chính xác thời gian giao</p>
+                            <select id="province-select">
+                                <option value="">Chọn Tỉnh/Thành phố</option>
+                            </select>
+                            
+                            <select id="district-select">
+                                <option value="">Chọn Quận/Huyện</option>
+                            </select>
+                            
+                            <input type="text" id="street-input" placeholder="Nhập số nhà, tên đường...">
+                            <button type="button" id="apply-address-btn">Áp dụng</button>
+                        </form>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </nav>
+<div id="home-content" class="page-fade-in">
+    <section class="menu-bar">
+        <div class="container">
+            <div class="menu-bar-content">
+                <ul>
+                    <li><a href=""><i class="fa-solid fa-mobile"></i>Điện thoại</a></li>
+                    <li><a href=""><i class="fa-solid fa-laptop"></i>Laptop</a></li>
+                    <li><a href=""><i class="fa-regular fa-headphones"></i>Phụ Kiện <i
+                                class="fa-solid fa-sort-down"></i></a>
+                        <div class="submenu">
+                            <ul>
+                                <li><a href="">Tai nghe</a></li>
+                                <li><a href="">Sạc dự phòng</a></li>
+                                <li><a href="">Ốp lưng</a></li>
+                                <li><a href="">Cáp sạc</a></li>
+                                <li><a href="">Loa</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href=""><i class="fa-regular fa-clock"></i>Smartwatch</a></li>
+                    <li><a href=""><i class="fa-solid fa-tablet"></i>Tablet</a></li>
+                    <li><a href=""><i class="fa-solid fa-mobile-screen-button"></i>Máy cũ, Thu cũ</a></li>
+                    <li><a href=""><i class="fa-solid fa-desktop"></i>Màn hình, Máy in</a></li>
+                    <li><a href=""><i class="fa-solid fa-sim-card"></i>Sim, Thẻ cào</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="slider-product-one">
+            <div class="container">
+                <div class="slider-product-one-content">
+                    <div class="slider-product-one-content-title">
+                        <h2><i class="fa-solid fa-star"></i> Khuyến mãi online</h2>
+                    </div>
+                    
+                    <div class="slider-product-one-content-container" style="position: relative; overflow: hidden;">
+                        
+                        <div class="slider-product-one-content-items-content" id="dynamic-slider-items">
+                            </div>
+
+                        <div class="slider-product-one-content-btn">
+                            <i class="fa-solid fa-chevron-left fa-chevron-left"></i>
+                            <i class="fa-solid fa-chevron-right fa-chevron-right"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-gallery-one">
+        <div class="container">
+            <div class="product-gallery-one-content">
+                <div class="product-gallery-one-content-title">
+                    <h2><i class="fa-solid fa-star"></i> Điện thoại nổi bật nhất</h2>
+                    <ul>
+                        <li><a href="">Iphone 16 Pro Max</a></li>
+                        <li><a href="">Samsung Galaxy S25 FE</a></li>
+                        <li><a href="">Xiaomi Redmi Note 15 5G</a></li>
+                        <li><a href="">Xem tất cả</a></li>
+                    </ul>
+                </div>
+                
+                <div class="product-gallery-one-content-product" id="dynamic-products">
+                    </div>
+                <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+                    <button id="btn-load-more" style="display: none; padding: 12px 40px; background: white; border: 2px solid #d70018; color: #d70018; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+                        Xem thêm sản phẩm <i class="fa-solid fa-angle-down" style="margin-left: 5px;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section id="user-dashboard" class="page-fade-in" style="display: none; background-color: #f3f3f3; padding: 20px 0; min-height: 60vh;">
+    <div class="container" style="display: flex; gap: 20px; align-items: flex-start;">
+        <div class="dashboard-sidebar" style="width: 25%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+            <h3 id="dashboard-user-name" style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; color: #333; width: 100%;">Đang tải...</h3>
+            
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; width: 100%; gap: 0;">
+                <li style="margin-bottom: 12px; width: 100%;">
+                    <a href="#" id="sidebar-orders-btn" style="display: block; padding: 12px 15px; background: #fdf0f0; color: #d70018; font-weight: bold; border-radius: 8px; text-decoration: none; border: 1px solid #fcdada;">
+                        <i class="fa-solid fa-list-ul" style="margin-right: 8px;"></i> Đơn hàng đã mua
+                    </a>
+                </li>
+                <li style="margin-bottom: 12px; width: 100%;">
+                    <a href="#" id="sidebar-profile-btn" style="display: block; padding: 12px 15px; background: #fff; color: #444; font-weight: bold; border-radius: 8px; text-decoration: none; border: 1px solid #ddd; transition: 0.3s;">
+                        <i class="fa-solid fa-user-pen" style="margin-right: 8px; color: #007bff;"></i> Hồ sơ của tôi
+                    </a>
+                </li>
+                <li style="margin-bottom: 12px; width: 100%;">
+                    <a href="#" id="sidebar-fav-btn" style="display: block; padding: 12px 15px; background: #fff; color: #444; font-weight: bold; border-radius: 8px; text-decoration: none; border: 1px solid #ddd; transition: 0.3s;">
+                        <i class="fa-solid fa-heart" style="margin-right: 8px; color: #ff4d4f;"></i> Sản phẩm yêu thích
+                    </a>
+                </li>
+                <li style="margin-bottom: 12px; width: 100%;">
+                    <a href="#" id="sidebar-cart-btn" style="display: block; padding: 12px 15px; background: #fff; color: #444; font-weight: bold; border-radius: 8px; text-decoration: none; border: 1px solid #ddd; transition: 0.3s;">
+                        <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i> Giỏ hàng của tôi
+                    </a>
+                </li>
+            </ul>
+            
+            <button id="logout-btn" style="width: 100%; padding: 12px; margin-top: auto; border: 1px solid #d70018; color: #d70018; background: white; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+                <i class="fa-solid fa-right-from-bracket" style="margin-right: 8px;"></i> Đăng xuất
+            </button>
+        </div>
+        <div class="dashboard-content" style="width: 75%; background: white; padding: 20px; border-radius: 10px;">
+            <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Đơn hàng đã mua</h3>
+                <button id="back-to-shop-from-dashboard" style="padding: 10px 20px; background: #fff; border: 1px solid #d70018; color: #d70018; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;">
+                    <i class="fa-solid fa-arrow-left"></i> Quay lại mua sắm
+                </button>
+            </div>
+            <div class="order-tabs" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                <button class="tab-btn active">Tất cả</button>
+                <button class="tab-btn">Chờ xử lý</button>
+                <button class="tab-btn">Đã xác nhận</button>
+                <button class="tab-btn">Đang giao hàng</button>
+                <button class="tab-btn">Đã hủy</button>
+            </div>
+            <div id="dynamic-orders-list">
+                <div class="empty-state" style="text-align: center; padding: 50px 0;">
+                    <i class="fa-solid fa-bag-shopping" style="font-size: 50px; color: #ddd; margin-bottom: 20px;"></i>
+                    <p>Chưa có đơn hàng nào được tải.</p>
+                </div>
+            </div>
+            <div id="dashboard-profile-section" style="display: none;">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Hồ sơ của tôi</h3>
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 8px; border: 1px solid #eee; max-width: 600px;">
+                    <form id="profile-form" onsubmit="return false;">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">Số điện thoại (Tài khoản):</label>
+                            <input type="text" id="profile-phone" disabled style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #e9ecef; color: #666; font-weight: bold;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">Họ và tên:</label>
+                            <input type="text" id="profile-name" placeholder="Nhập họ và tên của bạn" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px;">Địa chỉ giao hàng mặc định:</label>
+                            <textarea id="profile-address" rows="3" placeholder="Nhập địa chỉ nhận hàng" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none; resize: vertical;"></textarea>
+                        </div>
+                        <button id="btn-save-profile" type="submit" style="padding: 12px 25px; background: #d70018; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+                            <i class="fa-solid fa-floppy-disk"></i> LƯU THAY ĐỔI
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div id="dashboard-favorites-section" style="display: none;">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Sản phẩm bạn đã yêu thích</h3>
+                <div id="dynamic-favorites-list" style="display: flex; flex-wrap: wrap; gap: 15px;"></div>
+            </div>
+            <div id="dashboard-cart-section" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
+                    <h2 style="color: #d70018; margin: 0;"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng của bạn</h2>
+                </div>
+                
+                <div id="cart-delivery-section" style="background: #fff9f0; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ffead2;">
+                    <p style="color: #e67e22; font-weight: bold; margin-bottom: 5px;">
+                        <i class="fa-solid fa-truck-fast"></i> Địa chỉ giao hàng:
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span id="cart-display-address" style="color: #333; font-weight: 500;">Đang tải địa chỉ...</span>
+                        <button id="edit-address-in-cart" style="color: #007bff; border: none; background: none; cursor: pointer; font-weight: bold; text-decoration: underline;">Thay đổi</button>
+                    </div>
+                </div>
+                
+                <div id="cart-items-list">
+                    <p style="text-align: center; color: #777; padding: 40px 0;">Giỏ hàng đang trống. Hãy chọn vài món đồ nhé!</p>
+                </div>
+                
+                <div style="text-align: right; margin-top: 20px; border-top: 2px solid #eee; padding-top: 20px;">
+                    <div id="payment-method-section" style="background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02); text-align: left;">
+                        <h3 style="margin-bottom: 15px; color: #333; font-size: 16px;"><i class="fa-solid fa-credit-card" style="color:#d70018;"></i> Chọn phương thức thanh toán:</h3>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <label class="payment-option"><input type="radio" name="payment_method" value="COD" checked><div class="payment-content"><img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-cod.svg" style="width: 32px;"><span>Thanh toán tiền mặt khi nhận hàng (COD)</span></div></label>
+                            <label class="payment-option"><input type="radio" name="payment_method" value="MoMo"><div class="payment-content"><img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-momo.svg" style="width: 32px;"><span>Thanh toán bằng ví MoMo</span></div></label>
+                            <label class="payment-option"><input type="radio" name="payment_method" value="VNPAY"><div class="payment-content"><img src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-vnpay.png" style="width: 32px;"><span>Thanh toán qua VNPAY / Thẻ ngân hàng</span></div></label>
+                        </div>
+                    </div>
+                    <h3>Tổng tiền tạm tính: <span id="cart-total" style="color: #d70018; font-size: 28px;">0 đ</span></h3>
+                    <button id="btn-proceed-checkout" style="margin-top: 20px; padding: 15px 40px; background: #d70018; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer;">TIẾN HÀNH ĐẶT HÀNG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="product-detail-page" class="page-fade-in" style="display: none; background: #fff; padding: 20px 0; min-height: 60vh;">
+    <div class="container">
+        <button id="back-to-home" style="margin-bottom: 20px; padding: 10px 20px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 5px; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ</button>
+        <div style="display: flex; gap: 40px; align-items: flex-start;">
+            <div style="width: 40%; text-align: center; border: 1px solid #eee; border-radius: 10px; padding: 20px;">
+                <img id="detail-main-img" src="image/p1.jpg" style="width: 100%; border-radius: 10px;">
+            </div>
+            <div style="width: 60%;">
+                <h2 id="detail-name" style="margin-bottom: 10px; font-size: 28px;">Đang tải...</h2>
+                <h3 id="detail-price" style="color: #d70018; font-size: 26px; margin-bottom: 20px;">0 đ</h3>
+                <p id="detail-desc" style="color: #444; line-height: 1.6; margin-bottom: 20px;"></p>
+                
+                <h4 style="margin-bottom: 10px;">Chọn phiên bản & màu sắc:</h4>
+                <div id="detail-variants" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;"></div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <span style="font-weight: bold; font-size: 16px;">Số lượng:</span>
+                    <div style="display: flex; align-items: center; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;">
+                        <button id="detail-qty-minus" style="padding: 10px 15px; border: none; background: #f9f9f9; cursor: pointer; font-size: 16px; font-weight: bold;">-</button>
+                        <input type="number" id="detail-qty-input" value="1" min="1" style="width: 50px; text-align: center; border: none; outline: none; font-size: 16px; font-weight: bold;">
+                        <button id="detail-qty-plus" style="padding: 10px 15px; border: none; background: #f9f9f9; cursor: pointer; font-size: 16px; font-weight: bold;">+</button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <button id="add-to-cart-btn" style="flex: 1; padding: 15px; background: white; color: #d70018; border: 2px solid #d70018; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+                        <i class="fa-solid fa-cart-plus"></i> THÊM VÀO GIỎ
+                    </button>
+                    <button id="buy-now-btn" style="flex: 1; padding: 15px; background: #d70018; color: white; border: 2px solid #d70018; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;">
+                        <i class="fa-solid fa-money-bill-wave"></i> MUA NGAY
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 50px; border-top: 2px solid #eee; padding-top: 30px;">
+            <h3><i class="fa-solid fa-comments"></i> Khách hàng nhận xét</h3>
+            
+            <div id="review-form-container" style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 15px; margin-bottom: 20px; border: 1px solid #eee;">
+                <h4 style="margin-bottom: 10px; color: #333;">Viết đánh giá của bạn</h4>
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px;">Chất lượng sản phẩm:</label>
+                        <select id="review-rating" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 15px; outline: none;">
+                            <option value="5">⭐⭐⭐⭐⭐ Tuyệt vời</option>
+                            <option value="4">⭐⭐⭐⭐ Khá tốt</option>
+                            <option value="3">⭐⭐⭐ Bình thường</option>
+                            <option value="2">⭐⭐ Tệ</option>
+                            <option value="1">⭐ Rất tệ</option>
+                        </select>
+                    </div>
+                </div>
+                <textarea id="review-comment" rows="3" placeholder="Xin mời chia sẻ cảm nhận của bạn về sản phẩm..." style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 15px; resize: vertical; font-size: 14px; outline: none;"></textarea>
+                <button id="btn-submit-review" style="padding: 12px 25px; background: #d70018; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 15px;"><i class="fa-solid fa-paper-plane"></i> GỬI ĐÁNH GIÁ</button>
+            </div>
+
+            <div id="detail-reviews" style="margin-top: 20px;"></div>
+        </div>
+        <div style="margin-top: 50px; border-top: 2px solid #eee; padding-top: 30px; padding-bottom: 30px;">
+            <h3 style="margin-bottom: 20px; color: #333; font-size: 22px;">
+                <i class="fa-solid fa-boxes-stacked" style="color: #d70018;"></i> Sản phẩm cùng danh mục
+            </h3>
+            
+            <div id="related-products-list" style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; scroll-behavior: smooth;">
+                </div>
+        </div>
+    </div>
+</section>
+
+<div id="shopping-cart-page" class="page-fade-in" style="display: none;"></div>
+
+<section id="compare-page" class="page-fade-in" style="display: none; background: #fff; padding: 20px 0; min-height: 60vh;">
+    <div class="container">
+        <button id="close-compare-page" style="margin-bottom: 20px; padding: 10px 20px; cursor: pointer; border: 1px solid #ccc; background: #fff; border-radius: 5px; font-weight: bold;">
+            <i class="fa-solid fa-arrow-left"></i> Quay lại mua sắm
+        </button>
+        <h2 style="margin-bottom: 20px; font-size: 28px;"><i class="fa-solid fa-code-compare"></i> So sánh sản phẩm</h2>
+        
+        <div id="compare-table-container" style="overflow-x: auto;">
+            </div>
+    </div>
+</section>
+
+<div id="compare-floating-bar" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; box-shadow: 0 -4px 15px rgba(0,0,0,0.1); padding: 15px 20px; z-index: 1000; justify-content: center; align-items: center; gap: 30px; border-top: 3px solid #d70018;">
+    <div id="compare-slots" style="display: flex; gap: 15px; align-items: center;"></div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button id="btn-compare-now" style="padding: 12px 25px; background: #d70018; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">SO SÁNH NGAY</button>
+        <button id="btn-compare-clear" style="padding: 5px 10px; background: transparent; color: #666; border: none; text-decoration: underline; cursor: pointer;">Xóa tất cả</button>
+    </div>
+</div>
+    <script src="script.js?v=1001"></script>
+</body>
+
+</html>
