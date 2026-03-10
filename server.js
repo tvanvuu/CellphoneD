@@ -9,13 +9,13 @@ app.use(express.json());
 app.use(express.static(__dirname));
 // Cấu hình kết nối (Sửa lại đúng tên DB và mật khẩu của bạn)
 const config = {
-    user: process.env.DB_USER || 'sa', // Dùng biến môi trường cho bảo mật
-    password: process.env.DB_PASSWORD || '123456', 
-    server: process.env.DB_SERVER || 'dia-chi-ip-public-cua-ban', // Sẽ thay bằng IP thật sau
+    user: 'adminvuvu',
+    password: '@Tranvanvu3108', // Thầy điền mật khẩu Azure vào đây nhé
+    server: 'vuvu-sql-server.database.windows.net', 
     database: 'ecommerce_db',
     options: {
-        trustServerCertificate: true,
-        connectTimeout: 30000 // Tăng thời gian chờ kết nối lên 30s
+        encrypt: true, // Bắt buộc phải có khi dùng Azure
+        trustServerCertificate: false
     }
 };
 
