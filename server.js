@@ -9,12 +9,13 @@ app.use(express.json());
 app.use(express.static(__dirname));
 // Cấu hình kết nối (Sửa lại đúng tên DB và mật khẩu của bạn)
 const config = {
-    user: 'sa',
-    password: '123456', // Thay bằng mật khẩu bạn vừa đặt
-    server: '192.168.121.133', // Địa chỉ IP của máy chủ SQL Server
+    user: process.env.DB_USER || 'sa', // Dùng biến môi trường cho bảo mật
+    password: process.env.DB_PASSWORD || '123456', 
+    server: process.env.DB_SERVER || 'dia-chi-ip-public-cua-ban', // Sẽ thay bằng IP thật sau
     database: 'ecommerce_db',
     options: {
-        trustServerCertificate: true // Giữ nguyên để tránh lỗi SSL local
+        trustServerCertificate: true,
+        connectTimeout: 30000 // Tăng thời gian chờ kết nối lên 30s
     }
 };
 
@@ -758,6 +759,7 @@ app.put('/api/admin/images/:id', async (req, res) => {
 });
 
 // KHỞI ĐỘNG SERVER
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server CellphoneD đang chạy tại cổng: ${PORT}`);
 });
